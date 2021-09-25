@@ -29,7 +29,7 @@ import io.servicetalk.transport.api.ServerContext;
 import java.net.URI;
 import java.util.concurrent.Callable;
 import javax.sql.DataSource;
-import org.glassfish.hk2.utilities.binding.AbstractBinder;
+import org.glassfish.jersey.internal.inject.AbstractBinder;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

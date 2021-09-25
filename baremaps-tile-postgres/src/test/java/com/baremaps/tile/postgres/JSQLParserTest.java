@@ -37,12 +37,6 @@ class JSQLParserTest {
     String sql = "WITH a AS (SELECT c FROM t) SELECT c FROM a";
     Select select = (Select) CCJSqlParserUtil.parse(sql);
     assertNotNull(select);
-    System.out.println(select.getWithItemsList());
-    System.out.println(select.getWithItemsList().get(0).getItemsList());
-    System.out.println(select.getWithItemsList().get(0).getName());
-    System.out.println(select.getWithItemsList().get(0).getSubSelect());
-    System.out.println(select.getWithItemsList().get(0).getWithItemList());
-    System.out.println(select.getSelectBody());
   }
 
   @Test

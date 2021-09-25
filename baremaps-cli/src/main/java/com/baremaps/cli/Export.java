@@ -32,7 +32,7 @@ import com.baremaps.tile.TileStoreException;
 import com.baremaps.tile.Tiler;
 import com.baremaps.tile.mbtiles.MBTiles;
 import com.baremaps.tile.postgres.PostgresQuery;
-import com.baremaps.tile.postgres.PostgresTileStore;
+import com.baremaps.tile.postgres.PostgresUnionTileStore;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.BufferedReader;
@@ -158,7 +158,7 @@ public class Export implements Callable<Integer> {
 
   private TileStore sourceTileStore(TileJSON tileset, DataSource datasource) {
     List<PostgresQuery> queries = asPostgresQuery(tileset);
-    return new PostgresTileStore(datasource, queries);
+    return new PostgresUnionTileStore(datasource, queries);
   }
 
   private TileStore targetTileStore(TileJSON source, BlobStore blobStore)

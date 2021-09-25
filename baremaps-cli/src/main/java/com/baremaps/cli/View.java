@@ -26,7 +26,7 @@ import com.baremaps.server.viewer.ViewerResources;
 import com.baremaps.tile.TileCache;
 import com.baremaps.tile.TileStore;
 import com.baremaps.tile.postgres.PostgresQuery;
-import com.baremaps.tile.postgres.PostgresTileStore;
+import com.baremaps.tile.postgres.PostgresUnionTileStore;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.benmanes.caffeine.cache.CaffeineSpec;
 import io.servicetalk.http.api.BlockingStreamingHttpService;
@@ -37,7 +37,7 @@ import java.net.URI;
 import java.util.List;
 import java.util.concurrent.Callable;
 import javax.sql.DataSource;
-import org.glassfish.hk2.utilities.binding.AbstractBinder;
+import org.glassfish.jersey.internal.inject.AbstractBinder;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -101,7 +101,7 @@ public class View implements Callable<Integer> {
     DataSource datasource = PostgresUtils.datasource(database);
 
     List<PostgresQuery> queries = asPostgresQuery(tileJSON);
-    TileStore tileStore = new PostgresTileStore(datasource, queries);
+    TileStore tileStore = new PostgresUnionTileStore(datasource, queries);
     TileStore tileCache = new TileCache(tileStore, caffeineSpec);
 
     // Configure the application

@@ -22,13 +22,13 @@ import net.sf.jsqlparser.statement.select.FromItem;
 import net.sf.jsqlparser.statement.select.Join;
 import net.sf.jsqlparser.statement.select.SelectItem;
 
-class PostgresCTE {
+class PostgresWith {
 
   private final List<SelectItem> selectItems;
   private final FromItem fromItem;
   private final List<Join> joins;
 
-  public PostgresCTE(List<SelectItem> selectItems, FromItem fromItem, List<Join> joins) {
+  public PostgresWith(List<SelectItem> selectItems, FromItem fromItem, List<Join> joins) {
     this.selectItems = selectItems;
     this.fromItem = fromItem;
     this.joins = joins;
@@ -55,7 +55,7 @@ class PostgresCTE {
     if (this == o) {
       return true;
     }
-    if (!(o instanceof PostgresCTE)) {
+    if (!(o instanceof PostgresWith)) {
       return false;
     }
     return hashCode() == o.hashCode();

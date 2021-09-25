@@ -27,7 +27,7 @@ import com.baremaps.model.TileJSON;
 import com.baremaps.tile.Tile;
 import com.baremaps.tile.TileStore;
 import com.baremaps.tile.postgres.PostgresQuery;
-import com.baremaps.tile.postgres.PostgresTileStore;
+import com.baremaps.tile.postgres.PostgresWithTileStore;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -172,7 +172,7 @@ public class EditorResources {
   public Response getTile(@PathParam("z") int z, @PathParam("x") int x, @PathParam("y") int y) {
     try {
       List<PostgresQuery> queries = asPostgresQuery(getTileset());
-      TileStore tileStore = new PostgresTileStore(dataSource, queries);
+      TileStore tileStore = new PostgresWithTileStore(dataSource, queries);
       Tile tile = new Tile(x, y, z);
       byte[] bytes = tileStore.read(tile);
       if (bytes != null) {

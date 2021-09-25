@@ -39,9 +39,9 @@ import net.sf.jsqlparser.statement.select.Join;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class PostgresTileStore implements TileStore {
+public class PostgresWithTileStore implements TileStore {
 
-  private static Logger logger = LoggerFactory.getLogger(PostgresTileStore.class);
+  private static Logger logger = LoggerFactory.getLogger(PostgresWithTileStore.class);
 
   private static final String TILE_ENVELOPE = "st_tileenvelope(%1$s, %2$s, %3$s)";
 
@@ -82,7 +82,7 @@ public class PostgresTileStore implements TileStore {
 
   private final List<PostgresQuery> queries;
 
-  public PostgresTileStore(DataSource datasource, List<PostgresQuery> queries) {
+  public PostgresWithTileStore(DataSource datasource, List<PostgresQuery> queries) {
     this.datasource = datasource;
     this.queries = queries;
   }
@@ -139,7 +139,7 @@ public class PostgresTileStore implements TileStore {
         .collect(Collectors.joining(COMMA));
   }
 
-  protected String sourceQuery(PostgresCTE queryKey, List<PostgresQuery> queryValues) {
+  protected String sourceQuery(PostgresWith queryKey, List<PostgresQuery> queryValues) {
     String alias = queryKey.getAlias();
     String id = queryKey.getSelectItems().get(0).toString();
     String tags = queryKey.getSelectItems().get(1).toString();
@@ -196,8 +196,8 @@ public class PostgresTileStore implements TileStore {
     return query.getMinzoom() <= tile.z() && tile.z() < query.getMaxzoom();
   }
 
-  public PostgresCTE commonTableExpression(PostgresQuery query) {
-    return new PostgresCTE(
+  public PostgresWith commonTableExpression(PostgresQuery query) {
+    return new PostgresWith(
         query.getAst().getSelectItems(), query.getAst().getFromItem(), query.getAst().getJoins());
   }
 

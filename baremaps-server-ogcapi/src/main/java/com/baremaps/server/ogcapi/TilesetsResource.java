@@ -22,7 +22,7 @@ import com.baremaps.tile.Tile;
 import com.baremaps.tile.TileStore;
 import com.baremaps.tile.TileStoreException;
 import com.baremaps.tile.postgres.PostgresQuery;
-import com.baremaps.tile.postgres.PostgresTileStore;
+import com.baremaps.tile.postgres.PostgresUnionTileStore;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.github.benmanes.caffeine.cache.LoadingCache;
 import java.net.URI;
@@ -80,7 +80,7 @@ public class TilesetsResource implements TilesetsApi {
                                     query.getMaxzoom(),
                                     query.getSql())))
             .collect(Collectors.toList());
-    return new PostgresTileStore(dataSource, queries);
+    return new PostgresUnionTileStore(dataSource, queries);
   }
 
   @Override

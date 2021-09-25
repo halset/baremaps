@@ -35,6 +35,7 @@ The following docker image will allow you to jump start this installation:
 
 ```
 docker run \
+  --shm-size=1g \
   --name baremaps \
   --publish 5432:5432 \
   -e POSTGRES_DB=baremaps \

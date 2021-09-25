@@ -28,14 +28,12 @@ public class PostgresQuery {
   private final Integer minzoom;
   private final Integer maxzoom;
   private final String sql;
-  private final PlainSelect ast;
 
   public PostgresQuery(String layer, Integer minzoom, Integer maxzoom, String sql) {
     this.layer = layer;
     this.minzoom = minzoom;
     this.maxzoom = maxzoom;
     this.sql = sql;
-    this.ast = parse(sql);
   }
 
   public String getLayer() {
@@ -55,17 +53,13 @@ public class PostgresQuery {
   }
 
   public PlainSelect getAst() {
-    return ast;
-  }
-
-  private PlainSelect parse(String query) {
     // Try to parse the query
     PlainSelect plainSelect;
     try {
-      Select select = (Select) CCJSqlParserUtil.parse(query);
+      Select select = (Select) CCJSqlParserUtil.parse(sql);
       plainSelect = (PlainSelect) select.getSelectBody();
     } catch (JSQLParserException e) {
-      String message = String.format("The query is malformed.\n" + "\tQuery:\n\t\t%s", query);
+      String message = String.format("The query is malformed.\n" + "\tQuery:\n\t\t%s", sql);
       throw new IllegalArgumentException(message, e);
     }
 
@@ -76,7 +70,7 @@ public class PostgresQuery {
               "The query is malformed.\n"
                   + "\tExpected format:\n\t\tSELECT c1::bigint, c2::hstore, c3::geometry FROM t WHERE c\n"
                   + "\tActual query:\n\t\t%s",
-              query);
+              sql);
       throw new IllegalArgumentException(message);
     }
 
